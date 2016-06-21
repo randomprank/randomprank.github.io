@@ -81,20 +81,29 @@ var fullNameFns = [
     }
 ];
 
-display(buildContent(firstNames, fullNameFns));
+var fnIndex = getUrlParam(fullNameFns);
 
-function buildContent(firstNames, fullNameFns) {
+display(buildContent(firstNames, fullNameFns, fnIndex));
+
+function getUrlParam(fullNameFns) {
+  var loc = String(window.location);
+  var typeStr = loc.substring(loc.length - 1);
+  var type = typeStr >= 0 && typeStr < fullNameFns.length ? parseInt(typeStr) : null;
+  return type;
+}
+
+function buildContent(firstNames, fullNameFns, fnIndex) {
     var data = '';
     for (var i = 0; i < 240; i++) {
-        data += buildBlock(firstNames, fullNameFns);
+        data += buildBlock(firstNames, fullNameFns, fnIndex);
     }
     return data;
 }
 
-function buildBlock(firstNames, fullNameFns) {
+function buildBlock(firstNames, fullNameFns, fnIndex) {
     var data = '';
     for (var i = 0; i < 10; i++) {
-        var fullNameFn = rnd(fullNameFns);
+        var fullNameFn = fnIndex != null ? fullNameFns[fnIndex] : rnd(fullNameFns);
         data += fullNameFn(rnd(firstNames), rnd(firstNames));
         data += '<b' + 'r>';
     }
