@@ -81,27 +81,30 @@ var fullNameFns = [
     }
 ];
 
-var fnIndex = getUrlParam(fullNameFns);
+var prefs = {
+  fnIndex: getUrlParam(1),
+  latinOnly: getUrlParam(2)
+};
 
-display(buildContent(firstNames, fullNameFns, fnIndex));
+display(buildContent(firstNames, fullNameFns, prefs));
 
-function getUrlParam(fullNameFns) {
-  var loc = String(window.location);
-  var typeStr = loc.substring(loc.length - 1);
-  var type = typeStr >= 0 && typeStr < fullNameFns.length ? parseInt(typeStr) : null;
-  return type;
+function getUrlParam(fullNameFns, index) {
+  var loc = String(window.location),
+      pos = loc.indexOf('?');
+  return q == -1 ? null : parseInt(loc.substring(pos + index, pos + index + 1));
 }
 
-function buildContent(firstNames, fullNameFns, fnIndex) {
+function buildContent(firstNames, fullNameFns, prefs) {
     var data = '';
     for (var i = 0; i < 240; i++) {
-        data += buildBlock(firstNames, fullNameFns, fnIndex);
+        data += buildBlock(firstNames, fullNameFns, prefs);
     }
     return data;
 }
 
-function buildBlock(firstNames, fullNameFns, fnIndex) {
-    var data = '';
+function buildBlock(firstNames, fullNameFns, prefs) {
+    var data = '',
+        fnIndex = prefs.fnIndex;
     for (var i = 0; i < 10; i++) {
         var fullNameFn = fnIndex != null ? fullNameFns[fnIndex] : rnd(fullNameFns);
         data += fullNameFn(rnd(firstNames), rnd(firstNames));
