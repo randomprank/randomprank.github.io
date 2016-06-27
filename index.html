@@ -91,7 +91,7 @@ display(buildContent(firstNames, fullNameFns, prefs));
 function getUrlParam(fullNameFns, index) {
   var loc = String(window.location),
       pos = loc.indexOf('?');
-  return q == -1 ? null : parseInt(loc.substring(pos + index, pos + index + 1));
+  return pos == -1 ? null : parseInt(loc.substring(pos + index, pos + index + 1));
 }
 
 function buildContent(firstNames, fullNameFns, prefs) {
