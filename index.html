@@ -117,7 +117,7 @@ function buildName(firstNames, fullNameFns, prefs) {
       name;
   var fullNameFn = fnIndex != null ? fullNameFns[fnIndex] : rnd(fullNameFns);
   name = fullNameFn(rnd(firstNames), rnd(firstNames));
-  if (latinOnly && !/^[a-zA-Z]*$/.test(name.replace(LN, ''))) {
+  if (latinOnly && !/^[a-zA-Z]*$/.test(name.replace(LN, '').replace(' ', ''))) {
     name = buildName(firstNames, fullNameFns, prefs);
   }
   return name;
