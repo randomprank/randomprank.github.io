@@ -103,14 +103,24 @@ function buildContent(firstNames, fullNameFns, prefs) {
 }
 
 function buildBlock(firstNames, fullNameFns, prefs) {
-    var data = '',
-        fnIndex = prefs.fnIndex;
+    var data = '';
     for (var i = 0; i < 10; i++) {
-        var fullNameFn = fnIndex != null ? fullNameFns[fnIndex] : rnd(fullNameFns);
-        data += fullNameFn(rnd(firstNames), rnd(firstNames));
+        data += buildName(firstNames, fullNameFns, prefs);
         data += '<b' + 'r>';
     }
     return '<div class="block">' + data + '</div>';
+}
+
+function buildName(firstNames, fullNameFns, prefs) {
+  var fnIndex = prefs.fnIndex,
+      latinOnly = prefs.latinOnly,
+      name;
+  var fullNameFn = fnIndex != null ? fullNameFns[fnIndex] : rnd(fullNameFns);
+  name = fullNameFn(rnd(firstNames), rnd(firstNames));
+  if (latinOnly && !/^[a-zA-Z]*$/.test(name)) {
+    name = buildName(firstNames, fullNameFns, prefs);
+  }
+  return name;
 }
 
 function display(data) {
