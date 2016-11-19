@@ -83,7 +83,8 @@ var fullNameFns = [
 
 var prefs = {
   fnIndex: getUrlParam(1),
-  latinOnly: getUrlParam(2)
+  latinOnly: getUrlParam(2),
+  huOnly: getUrlParam(3)
 };
 
 display(buildContent(firstNames, fullNameFns, prefs));
@@ -1149,6 +1150,8 @@ function buildFirstNames() {
         return huNames.split(/[\t\r\n]+/);
     }
 
-    return [].concat(extractAm(amNames)).concat(extractHu(huNames));
+    return prefs.huOnly
+        ? [].concat(extractHu(huNames))
+        : [].concat(extractAm(amNames)).concat(extractHu(huNames));
 }
 </script>
